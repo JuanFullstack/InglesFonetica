@@ -267,9 +267,9 @@ const CsvViewer: React.FC = () => {
             onChange={(e) => setFont(e.target.value)}
           >
             <option value="Arial">Arial</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Courier New">Courier New</option>
-            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
           </select>
         </div>
       </div>
@@ -290,37 +290,43 @@ const CsvViewer: React.FC = () => {
               style={{ fontFamily: font }}
             >
               {showEnglish && (
-                <div className="flex items-center gap-2">
+                <div className="mb-2">
+                 <div className="flex items-center gap-2 mb-2">
+                  <StyledButton
+                    active={true}
+                    onClick={() => handleReadLine(row.english, rowIndex)}
+                    className="bg-blue-500 text-white text-xs px-2 py-1"
+                  >
+                    {isReading && currentParagraphIndex === rowIndex ? 'Stop' : 'Read'}
+                  </StyledButton>
+                  <AudioRecorder
+                    rowId={rowId}
+                    onSave={handleSaveAudio}
+                    onDelete={handleDeleteAudio}
+                    existingAudioUrl={audioRecordings[rowId]}
+                  />
+                  {audioRecordings[rowId] && (
+                    <audio controls={false}>
+                      <source src={audioRecordings[rowId]} type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  )}
+                </div>
                   <p className="text-blue-600">
-                    {paddedEnglish.map((word, wordIndex) => (
-                      <span
-                        key={wordIndex}
-                        className={`
-                          ${(isReading && currentParagraphIndex === rowIndex && activeWordIndex === wordIndex)
-                            ? 'bg-yellow-300 px-1 py-0.5 rounded'
-                            : ''}
-                          ${wordIndex % 2 === 0 ? 'text-blue-600' : 'text-blue-400'}
-                        `}
-                      >
-                        {word}{' '}
-                      </span>
-                    ))}
+                  {paddedEnglish.map((word, wordIndex) => (
+                  <span
+                    key={wordIndex}
+                    className={`
+                      ${(isReading && currentParagraphIndex === rowIndex && activeWordIndex === wordIndex)
+                        ? 'bg-yellow-300 px-1 py-0.5 rounded'
+                        : ''}
+                      ${wordIndex % 2 === 0 ? 'text-blue-600' : 'text-blue-400'}
+                    `}
+                  >
+                    {word}{' '}
+                  </span>
+                ))}
                   </p>
-                  <div className="flex items-center gap-2">
-                    <StyledButton
-                      active={true}
-                      onClick={() => handleReadLine(row.english, rowIndex)}
-                      className="bg-blue-500 text-white text-xs px-2 py-1"
-                    >
-                      {isReading && currentParagraphIndex === rowIndex ? 'Stop' : 'Read'}
-                    </StyledButton>
-                    <AudioRecorder
-                      rowId={rowId}
-                      onSave={handleSaveAudio}
-                      onDelete={handleDeleteAudio}
-                      existingAudioUrl={audioRecordings[rowId]}
-                    />
-                  </div>
                 </div>
               )}
               {showPhonetic && (
