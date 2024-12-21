@@ -267,9 +267,10 @@ const CsvViewer: React.FC = () => {
             onChange={(e) => setFont(e.target.value)}
           >
             <option value="Arial">Arial</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Courier New">Courier New</option>
-            <option value="Times New Roman">Times New Roman</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Open Sans">Open Sans</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Raleway">Raleway</option>
           </select>
         </div>
       </div>
@@ -284,51 +285,49 @@ const CsvViewer: React.FC = () => {
           const rowId = `${id}_${rowIndex}`;
 
           return (
-            <div 
+            <div
               key={rowIndex}
               className={`p-4 rounded ${rowIndex % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
               style={{ fontFamily: font }}
             >
+              <div className="flex items-center gap-2 mb-2">
+                <StyledButton
+                  active={true}
+                  onClick={() => handleReadLine(row.english, rowIndex)}
+                  className="bg-blue-500 text-white text-xs px-2 py-1"
+                >
+                  {isReading && currentParagraphIndex === rowIndex ? 'Stop' : 'Read'}
+                </StyledButton>
+                <AudioRecorder
+                  rowId={rowId}
+                  onSave={handleSaveAudio}
+                  onDelete={handleDeleteAudio}
+                  existingAudioUrl={audioRecordings[rowId]}
+                />
+              </div>
               {showEnglish && (
-                <div className="flex items-center gap-2">
-                  <p className="text-blue-600">
-                    {paddedEnglish.map((word, wordIndex) => (
-                      <span
-                        key={wordIndex}
-                        className={`
-                          ${(isReading && currentParagraphIndex === rowIndex && activeWordIndex === wordIndex)
-                            ? 'bg-yellow-300 px-1 py-0.5 rounded'
-                            : ''}
-                          ${wordIndex % 2 === 0 ? 'text-blue-600' : 'text-blue-400'}
-                        `}
-                      >
-                        {word}{' '}
-                      </span>
-                    ))}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <StyledButton
-                      active={true}
-                      onClick={() => handleReadLine(row.english, rowIndex)}
-                      className="bg-blue-500 text-white text-xs px-2 py-1"
+                <p className="text-blue-600">
+                  {paddedEnglish.map((word, wordIndex) => (
+                    <span
+                      key={wordIndex}
+                      className={`
+                        ${(isReading && currentParagraphIndex === rowIndex && activeWordIndex === wordIndex)
+                          ? 'bg-yellow-300 px-1 py-0.5 rounded'
+                          : ''}
+                        ${wordIndex % 2 === 0 ? 'text-black' : 'text-red-500'}
+                      `}
                     >
-                      {isReading && currentParagraphIndex === rowIndex ? 'Stop' : 'Read'}
-                    </StyledButton>
-                    <AudioRecorder
-                      rowId={rowId}
-                      onSave={handleSaveAudio}
-                      onDelete={handleDeleteAudio}
-                      existingAudioUrl={audioRecordings[rowId]}
-                    />
-                  </div>
-                </div>
+                      {word}{' '}
+                    </span>
+                  ))}
+                </p>
               )}
               {showPhonetic && (
                 <p className="text-green-600">
                   {paddedPhonetic.map((word, wordIndex) => (
                     <span
                       key={wordIndex}
-                      className={wordIndex % 2 === 0 ? 'text-green-600' : 'text-green-400'}
+                      className={wordIndex % 2 === 0 ? 'text-black' : 'text-red-500'}
                     >
                       {word}{' '}
                     </span>
@@ -336,7 +335,7 @@ const CsvViewer: React.FC = () => {
                 </p>
               )}
               {showSpanish && (
-                <p className="text-purple-600 mt-2">
+                <p className="text-gray-400 mt-2">
                   {row.spanish}
                 </p>
               )}
