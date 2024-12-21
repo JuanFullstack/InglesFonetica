@@ -31,6 +31,8 @@ const CsvViewer: React.FC = () => {
   const [globalWordIndex, setGlobalWordIndex] = useState<number>(-1);
   const [audioRecordings, setAudioRecordings] = useState<Record<string, string>>({});
 
+
+  
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = speechSynthesis.getVoices();
@@ -261,17 +263,17 @@ const CsvViewer: React.FC = () => {
 
           <label htmlFor="font-select" className="text-gray-700">Font:</label>
           <select
-            id="font-select"
-            className="p-2 border rounded"
-            value={font}
-            onChange={(e) => setFont(e.target.value)}
-          >
-            <option value="Arial">Arial</option>
-            <option value="Roboto">Roboto</option>
-            <option value="Open Sans">Open Sans</option>
-            <option value="Montserrat">Montserrat</option>
-            <option value="Raleway">Raleway</option>
-          </select>
+    id="font-select"
+    className="p-2 border rounded"
+    value={font}
+    onChange={(e) => setFont(e.target.value)}
+  >
+    <option value="Arial">Arial</option>
+    <option value="Roboto">Roboto</option>
+    <option value="Open Sans">Open Sans</option>
+    <option value="Montserrat">Montserrat</option>
+    <option value="Raleway">Raleway</option>
+  </select>
         </div>
       </div>
 
